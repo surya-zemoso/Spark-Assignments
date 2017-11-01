@@ -1,8 +1,12 @@
-from pyspark import SparkContext, SparkConf
+from pyspark.sql import SparkSession
+from pyspark import SparkConf
 
-conf = SparkConf().setAppName('GDP Analysis').setMaster('local')
-sc = SparkContext()
-sqlContext = SQLContext(sc)
+conf = SparkConf().setMaster('local')
+#sc = SparkContext()
+#sqlContext = SQLContext(sc)
+
+
+spark = SparkSession.builder.appName("GDP Analysis").config(conf=SparkConf()).getOrCreate()
 
 
 # Reading gdp.csv file and create it a data frame
@@ -31,4 +35,4 @@ sqlDF2 = spark.sql("SELECT d1.Year, d1.Country_Name, d1.Value FROM GDP_Rate d1, 
 
 #Renaming Country_Name column to Country Name
 sqlDF2 = sqlDF2.withColumnRenamed("Country_Name", "Country Name")
-#sqlDF2.show()
+sqlDF2.show(100)
