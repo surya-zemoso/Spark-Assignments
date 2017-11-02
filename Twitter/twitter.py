@@ -1,7 +1,7 @@
 
 from pyspark import SparkContext, SparkConf
 
-conf = SparkConf().setAppName('Twitter Analysis').setMaster('local')
+conf = SparkConf().setAppName("Twitter Analysis").setMaster('spark://zemoso-dell:7077')
 sc = SparkContext(conf=conf)
 
 
@@ -14,7 +14,7 @@ splitTwit = allTweet.flatMap(lambda x: x.split(" "))
 # extracting # tag twit from splitTwit list
 tagTwit = splitTwit.filter(lambda x: x.startswith('#'))
 
-#create tuple of  #tag list & use reduceByKey to collect & count all tuple by same key
+#create tuple of  #tag list & use reduceByKey to collect all tuple by same key
 tupleTwit = tagTwit.map(lambda t: (t,1)).reduceByKey(lambda x,y:x+y)
 
 #sorting the tuple by value

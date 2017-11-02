@@ -10,6 +10,10 @@ spark = SparkSession.builder.appName("GDP Analysis").config(conf=SparkConf()).ge
 
 
 # Reading gdp.csv file and create it a data frame
+
+#for creating dataframe and loading gdp.csv file, we can use any of the below method-  
+#1) df = spark.read.csv('gdp.csv',mode="DROPMALFORMED",inferSchema=True,header=True)
+#2) df = spark.read.format("csv").option("header", "true").load("gdp.csv")
 df = spark.read.csv('gdp.csv',mode="DROPMALFORMED",inferSchema=True,header=True)
 #df.show()
 
